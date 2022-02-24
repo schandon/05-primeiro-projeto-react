@@ -4,7 +4,7 @@ import { FiChevronRight } from 'react-icons/fi'
 import logoImg from '../../assets/logo.svg';
 import api from "../../services/api";
 import Repository from "../Repository";
-import { Title, Form, Repositories } from './style'
+import { Title, Form, Repositories, Error } from './style'
 
 
 interface Repository{
@@ -17,10 +17,28 @@ interface Repository{
 }
 const Dashboard: React.FC = () => {
     const [newRepo, setNewRepo] = useState('');
-    const [repositories, newRepositories] = useState<Repository[]>([]);
+    const [inputError, setInputError] = useState('');
+    const [repositories, setRepositories] = useState<Repository[]>([]);
 
-    async function handleAddRepository(event: FormEvent<HTMLFormElement> ): Promise<void> {
+    async function handleAddRepository(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
+
+        if (!newRepo) {
+            setInputError('Digite o Autor/Nome do repositório');
+        }
+        try {
+            const response = await api.get<Repository>(`repos/${newRepo}`);
+            
+            const repository = response.data;
+
+            setRepositories([...repositories, repository]);
+
+            setNewRepo('');
+
+        } catch (err) {
+            setInputError('Erro na busca por esse repositório')
+        }
+
         
         const response = await api.get(`repos/${newRepo}`)
 
@@ -28,7 +46,7 @@ const Dashboard: React.FC = () => {
 
         const repository = response.data;
 
-        newRepositories([...repositories, repository]);
+        setRepositories([...repositories, repository]);
 
         setNewRepo('');
     }
@@ -38,13 +56,15 @@ const Dashboard: React.FC = () => {
             <img src={logoImg} alt="WareHouse Explorer" />
             <Title>Explore repositorios no Github</Title>
 
-            <Form onSubmit={handleAddRepository}>
+            <Form hasError={!!inputError }onSubmit={handleAddRepository}>
                 <input
                     value={newRepo}
                     onChange={e => setNewRepo(e.target.value)}
                     placeholder="Digite Aqui" />
                 <button type="submit">Pesquisar</button>
             </Form>
+
+            {inputError && <Error>{inputError}</Error>}
 
             <Repositories>
                 {repositories.map(repository => (
