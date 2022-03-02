@@ -25,30 +25,17 @@ const Dashboard: React.FC = () => {
 
         if (!newRepo) {
             setInputError('Digite o Autor/Nome do repositório');
+            return;
         }
         try {
             const response = await api.get<Repository>(`repos/${newRepo}`);
-            
             const repository = response.data;
-
             setRepositories([...repositories, repository]);
-
             setNewRepo('');
-
+            setInputError('');
         } catch (err) {
-            setInputError('Erro na busca por esse repositório')
+            setInputError('Erro na busca por esse repositório');
         }
-
-        
-        const response = await api.get(`repos/${newRepo}`)
-
-        console.log(response.data);
-
-        const repository = response.data;
-
-        setRepositories([...repositories, repository]);
-
-        setNewRepo('');
     }
 
     return (

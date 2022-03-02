@@ -57,7 +57,7 @@ export const Form = styled.form<FormProps>`
         }
     }
 `;
-export const Error = styled.form`
+export const Error = styled.span`
     display: block;
     color: #c53030;
     margin-top: 8px;
