@@ -13,7 +13,7 @@ export const Header = styled.header`
 		transition: 0.2s;
 	}
 	
-	& houver{
+	&:houver{
 		color: #666;	
 	};
 	svg {
@@ -22,26 +22,27 @@ export const Header = styled.header`
 	}
 `;
 
-export const RepositoryInfo = styled.header`
+export const RepositoryInfo = styled.section`
 	margin-top: 80px;
 	
 	header{
 		display: flex;
 		align-items: center;
 		
-		img{
+		img {
 			width: 120px;
 			height: 120px;
 			border-radius: 120px;
 		}
 		
-		div{
+		div {
 			margin-left: 24px;
-			strong{
-				font-size: 35px;
-				color: #3d3d3d;
+
+			strong {
+				font-size: 36px;
+				color: #3d3d4d;
 			} 
-			p{
+			p {
 				font-size: 18px;
 				color: #737380;
 				margin-top: 4px;
@@ -63,18 +64,17 @@ export const RepositoryInfo = styled.header`
 				font-size: 36px;
 				color: #3d3d4d;
 			}
-			spam {
+			span {
 					display: block;
 					margin-top: 4px;
 					color: #6c6c80;
 				}
 		}
-	}`;
+	}
+`;
 
-export const Repositories = styled.div`
+export const Issues = styled.div`
     margin-top: 80px;
-    max-width: 700px;
-
     a{
         background: #fff;
         border-radius: 5px;
@@ -95,11 +95,6 @@ export const Repositories = styled.div`
             margin-top: 16px;
         } 
         
-        img { 
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-        }
 
         div {
             margin: 0 16px;
